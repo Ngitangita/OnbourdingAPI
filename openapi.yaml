@@ -1,0 +1,70 @@
+openapi: 3.0.3
+info:
+  title: Onbourding API
+  description: |-
+    Mon STD22047
+  version: 1.2.0
+servers:
+  - url: http://STD22047.com
+
+
+paths:
+  
+  /Post/students:
+    post:
+      requestBody:
+        content:
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Student'
+          
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Student'
+        '405':
+          description: Invalid input
+  /Get/students:
+    get:
+   
+      responses:
+        '200':
+          description: successful operation
+          content:
+                   
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Student'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: this ID don't exist
+    
+  
+components:
+  schemas:
+    Student:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 22047
+        Name:
+            type: string
+            format: int64
+            example: Elisé
+            
+        Birthday: 
+            type: string
+            format: date
+            
+        
+      xml:
+        name: student
+
+   
+    
