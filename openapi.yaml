@@ -7,45 +7,221 @@ info:
 servers:
   - url: http://STD22047.com
 
-
+tags:
+  - name: teacher
+    description: Operations about teacher
+  - name: students
+    description: Operations about students
+    
 paths:
-  
-  /Post/students:
+  /teacher:
     post:
+      tags:
+        - teacher
+      summary: Create teacher
+      description: This can only be done by the logged in teacher.
+      operationId: createTeacher
       requestBody:
+        description: Created teacher object
         content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Teacher'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Teacher'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Teacher'
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Teacher'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Teacher'
+  
+  /teacher/{Toky}:
+    get:
+      tags:
+        - teacher
+      summary: Get teacher by teacher name
+      description: ''
+      operationId: getTeacherByName
+      parameters:
+        - name: Toky
+          in: path
+          description: 'The name that needs to be fetched. Use teacher1 for testing. '
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Teacher'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Teacher'
+        '400':
+          description: Invalid teachername supplied
+        '404':
+          description: Teacher not found
+
+  /students:
+    post:
+      tags:
+        - students
+      summary: Create students
+      description: This can only be done by the logged in students.
+      operationId: createStudents
+      requestBody:
+        description: Created students object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
           application/xml:
             schema:
               $ref: '#/components/schemas/Student'
-          
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Student'
       responses:
-        '200':
+        default:
           description: successful operation
           content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
             application/xml:
               schema:
                 $ref: '#/components/schemas/Student'
-        '405':
-          description: Invalid input
-  /Get/students:
+  
+  /students/{Elisé}:
     get:
-   
+      tags:
+        - students
+      summary: Get students by students name
+      description: ''
+      operationId: getStudentsByName
+      parameters:
+        - name: Elisé
+          in: path
+          description: 'The name that needs to be fetched. Use students1 for testing. '
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: successful operation
           content:
-                   
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'          
             application/xml:
               schema:
                 $ref: '#/components/schemas/Student'
         '400':
-          description: Invalid ID supplied
+          description: Invalid studentsname supplied
         '404':
-          description: this ID don't exist
-    
+          description: Students not found
+    put:
+      tags:
+        - students
+      summary: Update students
+      description: This can only be done by the logged in students.
+      operationId: updateStudents
+      parameters:
+        - name: Elisé
+          in: path
+          description: name that need to be deleted
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Update an existent students in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Student'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Student'
+      responses:
+        default:
+          description: successful operation
+    delete:
+      tags:
+        - students
+      summary: Delete students
+      description: This can only be done by the logged in students.
+      operationId: deleteStudents
+      parameters:
+        - name: Elisé
+          in: path
+          description: The name that needs to be deleted
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Invalid studentsname supplied
+        '404':
+          description: Students not found
+          
+  
   
 components:
   schemas:
+    Teacher:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 01
+        teachername:
+          type: string
+          example: Tokimahery RAMAROZAKA
+        firstName:
+          type: string
+          example: Ramarozaka
+        lastName:
+          type: string
+          example: Toky
+        email:
+          type: string
+          example: toky@hei.school
+        password:
+          type: string
+          example: '12345'
+        phone:
+          type: string
+          example: '034 13 582 27'
+        teacherStatus:
+          type: string
+          description: Teacher Status
+          format: int32
+          example: 'Enseignant Permanent'
+        subjectsTaught:  
+          type: array
+          items:
+            type: string
+            example: '[ - PROG1, - PROG2,  - Web1 , - Donnée1]'
+             
+              
+      xml:
+        name: teacher
+        
     Student:
       type: object
       properties:
@@ -53,18 +229,37 @@ components:
           type: integer
           format: int64
           example: 22047
-        Name:
+        firstName:
             type: string
             format: int64
-            example: Elisé
-            
+            example: RAKOTONDRARIVO
+        lastName:
+          type: string
+          example: Florentino Elisé  
         Birthday: 
             type: string
             format: date
-            
+            example: 2002-07-11
+        Address:
+          type: string
+          example: Soavimasoandro
+        School:
+          type: string
+          example: HEI
+        email:
+          type: string
+          example: hei.elise.3@gmail.com
+        password:
+          type: string
+          example: 'Florentino02*'
+        phone:
+          type: string
+          example: '038 97 165 55'   
         
       xml:
         name: student
-
-   
+        
+  
     
+    
+  
